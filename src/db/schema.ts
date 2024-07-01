@@ -1,7 +1,9 @@
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+
 import { integer, sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
-// Actual schema
+/* MAIN SCHEMA */
 export const roles = sqliteTable('role', {
   id: integer('id').primaryKey(),
   name: text('name').notNull(),
@@ -9,7 +11,7 @@ export const roles = sqliteTable('role', {
 })
 
 export const roleMappings = sqliteTable('roleMapping', {
-  userId: integer('userId')
+  userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   roleId: integer('roleId').notNull(),
@@ -25,7 +27,7 @@ export const teams = sqliteTable('team', {
 })
 
 export const teamMembers = sqliteTable('teamMember', {
-  userId: integer('userId')
+  userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   teamId: integer('teamId').notNull(),
@@ -34,18 +36,16 @@ export const teamMembers = sqliteTable('teamMember', {
     .notNull(),
 })
 
-// Authentication & user accounts
-export const users = sqliteTable('user', {
-  id: integer('id').primaryKey(),
-  name: text('name'),
-  email: text('email').notNull(),
-  emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
-  image: text('image'),
+export const memberData = sqliteTable('memberData', {
+  memberNumber: integer('memberNumber').primaryKey({ autoIncrement: true }),
+  userId: text('userId')
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
   payment_id: text('payment_id'),
-  active_payment: integer('active_payment', { mode: 'boolean' }).$default(
+  active_payment: integer('active_payment', { mode: 'boolean' }).$defaultFn(
     () => false,
   ),
-  payment_override: integer('payment_override', { mode: 'boolean' }).$default(
+  payment_override: integer('payment_override', { mode: 'boolean' }).$defaultFn(
     () => false,
   ),
   ecf_rating: integer('ecf_rating'),
@@ -56,10 +56,21 @@ export const users = sqliteTable('user', {
   fide_id: text('fide_id'),
 })
 
+/* AUTHENTICATION SCHEMA */
+export const users = sqliteTable('user', {
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text('name'),
+  email: text('email').notNull(),
+  emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
+  image: text('image'),
+})
+
 export const accounts = sqliteTable(
   'account',
   {
-    userId: integer('userId')
+    userId: text('userId')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     type: text('type').$type<AdapterAccountType>().notNull(),
@@ -82,7 +93,7 @@ export const accounts = sqliteTable(
 
 export const sessions = sqliteTable('session', {
   sessionToken: text('sessionToken').primaryKey(),
-  userId: integer('userId')
+  userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
   expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
@@ -106,7 +117,7 @@ export const authenticators = sqliteTable(
   'authenticator',
   {
     credentialID: text('credentialID').notNull().unique(),
-    userId: integer('userId')
+    userId: text('userId')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     providerAccountId: text('providerAccountId').notNull(),

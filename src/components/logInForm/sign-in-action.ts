@@ -2,7 +2,7 @@
 
 import { signIn } from '@/auth'
 import { db } from '@/db/db'
-import { users } from '@/db/schema'
+import { users, memberData } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
 export type SignInState = {
@@ -15,23 +15,24 @@ export async function signInAction(
   formData: FormData,
 ) {
   try {
-    const code = formData.get('code') as string | undefined
-    if (!code) throw new Error('Invalid form data')
+    const memberCode = formData.get('code') as string | undefined
+    if (!memberCode) throw new Error('Invalid form data')
 
     // Code comes in as LCA000 - which is just a zero padded version of the DB ID
     // So we need to parse that into the id and then look up the email
-    if (!code.startsWith('LCA')) throw new Error('Invalid code')
-    const id = parseInt(code.replace('LCA', ''))
+    if (!memberCode.startsWith('LCA')) throw new Error('Invalid code')
+    const memberNumber = parseInt(memberCode.replace('LCA', ''))
 
-    if (isNaN(id)) throw new Error('Invalid code')
+    if (isNaN(memberNumber)) throw new Error('Invalid code')
 
     // Code is at least formatted correct, now check if it's a valid ID
     const emailAddress = await db
       .select({ email: users.email })
       .from(users)
-      .where(eq(users.id, id))
+      .fullJoin(memberData, eq(users.id, memberData.userId))
+      .where(eq(memberData.memberNumber, memberNumber))
       .then((result) => {
-        return result[0].email
+        return result[0]?.email
       })
     if (!emailAddress) throw new Error('No member found')
 

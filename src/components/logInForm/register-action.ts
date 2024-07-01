@@ -24,13 +24,13 @@ export async function registerAction(
       .from(users)
       .where(eq(users.email, email))
       .then((result) => {
-        return result[0].id
+        return result[0]?.id
       })
     if (userId)
       throw new Error('A member with that email address already exists')
 
     // Send the sign in link to the email address
-    await signIn('resend', { email: email })
+    await signIn('resend', { email })
     return {
       success: true,
       message: 'Check your email to complete registration',
