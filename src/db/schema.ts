@@ -37,7 +37,9 @@ export const teamMembers = sqliteTable('teamMember', {
 })
 
 export const memberData = sqliteTable('memberData', {
-  memberNumber: integer('memberNumber').primaryKey({ autoIncrement: true }),
+  memberNumber: integer('memberNumber')
+    .primaryKey({ autoIncrement: true })
+    .notNull(),
   userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
