@@ -1,19 +1,22 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
 import { signIn } from '@/auth'
 import { db } from '@/db/db'
 import { users, memberData } from '@/db/schema'
-import { eq } from 'drizzle-orm'
 
-export type SignInState = {
+export interface SignInState {
   success: boolean | undefined
   message: string
 }
 
 export async function signInAction(
   previousState: SignInState,
-  formData: FormData,
-) {
+  formData: FormData
+): Promise<{
+  success: boolean
+  message: string
+}> {
   try {
     const memberCode = formData.get('code') as string | undefined
     if (!memberCode) throw new Error('Invalid form data')
@@ -40,7 +43,6 @@ export async function signInAction(
     await signIn('resend', { email: emailAddress })
     return { success: true, message: 'Check your email for a sign in link' }
   } catch (e) {
-    console.error(e)
     return {
       success: false,
       message: e instanceof Error ? e.message : 'An error occurred',

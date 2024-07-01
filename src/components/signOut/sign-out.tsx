@@ -1,11 +1,14 @@
 'use client'
 import { signOut } from 'next-auth/react'
 
-export function SignOut() {
+export function SignOut({ pinned }: { pinned?: boolean }): JSX.Element {
   return (
     <button
-      className="btn btn-accent absolute top-4 right-4"
-      onClick={() => signOut()}
+      type="button"
+      className={`btn btn-accent ${pinned ? ' absolute top-4 right-4' : ''}`}
+      onClick={() => {
+        void signOut()
+      }}
     >
       Sign Out
     </button>

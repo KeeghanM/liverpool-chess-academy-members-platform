@@ -1,8 +1,0 @@
-{
-  "extends": [
-    "@vercel/style-guide/eslint/browser",
-    "@vercel/style-guide/eslint/next",
-    "@vercel/style-guide/eslint/react"
-  ],
-  "plugins": ["@tanstack/eslint-plugin-query"]
-}

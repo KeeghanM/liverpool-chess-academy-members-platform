@@ -14,9 +14,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      if (!user || !user.id) return false
+      if (!user.id) return false
 
-      // @ts-ignore - emailVerified is not in the type definition for some reason
+      // @ts-expect-error - emailVerified is not in the type definition for some reason
       if (user.emailVerified === null) {
         // This is the first time the user has signed in with this account
         // So we need to generate their member number

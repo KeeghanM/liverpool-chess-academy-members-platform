@@ -1,4 +1,5 @@
 {
+  "extends": "@vercel/style-guide/typescript/node16",
   "compilerOptions": {
     "lib": [
       "dom",

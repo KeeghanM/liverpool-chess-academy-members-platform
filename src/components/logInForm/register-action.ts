@@ -1,19 +1,22 @@
 'use server'
 
+import { eq } from 'drizzle-orm'
 import { signIn } from '@/auth'
 import { db } from '@/db/db'
 import { users } from '@/db/schema'
-import { eq } from 'drizzle-orm'
 
-export type RegisterState = {
+export interface RegisterState {
   success: boolean | undefined
   message: string
 }
 
 export async function registerAction(
   previousState: RegisterState,
-  formData: FormData,
-) {
+  formData: FormData
+): Promise<{
+  success: boolean
+  message: string
+}> {
   try {
     const email = formData.get('email') as string | undefined
     if (!email) throw new Error('Invalid form data')
@@ -36,7 +39,6 @@ export async function registerAction(
       message: 'Check your email to complete registration',
     }
   } catch (e) {
-    console.error(e)
     return {
       success: false,
       message: e instanceof Error ? e.message : 'An error occurred',

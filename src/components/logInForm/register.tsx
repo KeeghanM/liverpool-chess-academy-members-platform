@@ -1,12 +1,12 @@
 'use client'
+import { useEffect, useState } from 'react'
+import { useFormState } from 'react-dom'
 import { Spinner } from '../spinner'
 import { registerAction } from './register-action'
 import type { RegisterState } from './register-action'
-import { useEffect, useState } from 'react'
-import { useFormState } from 'react-dom'
 
 const initialState: RegisterState = { success: undefined, message: '' }
-export function Register() {
+export function Register(): JSX.Element {
   const [state, formAction] = useFormState(registerAction, initialState)
   const [pending, setPending] = useState(false)
 
@@ -17,7 +17,9 @@ export function Register() {
   return (
     <form
       action={formAction}
-      onSubmit={() => setPending(true)}
+      onSubmit={() => {
+        setPending(true)
+      }}
       className="flex flex-col gap-4 items-center justify-center"
     >
       <h2 className="text-lg font-bold">Register</h2>
@@ -38,16 +40,15 @@ export function Register() {
       >
         {pending ? <Spinner /> : 'Register'}
       </button>
-      {state.message && (
+      {state.message ? (
         <p
-          className={
-            'italic ' +
-            (state.success === true ? 'text-lime-500' : 'text-red-500')
-          }
+          className={`italic ${
+            state.success === true ? 'text-lime-500' : 'text-red-500'
+          }`}
         >
           {state.message}
         </p>
-      )}
+      ) : null}
     </form>
   )
 }

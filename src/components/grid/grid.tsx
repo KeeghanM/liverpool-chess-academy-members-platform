@@ -1,4 +1,4 @@
-export function Grid({ children }: { children: React.ReactNode }) {
+export function Grid({ children }: { children: React.ReactNode }): JSX.Element {
   return (
     <div
       id="gridDisplay"

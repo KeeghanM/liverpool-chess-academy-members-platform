@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { SignIn } from './sign-in'
 import { Register } from './register'
 
-export function LogInForm() {
+export function LogInForm(): JSX.Element {
   const [mode, setMode] = useState<'login' | 'register'>('login')
 
   return (
@@ -11,15 +11,21 @@ export function LogInForm() {
       {mode === 'login' ? <SignIn /> : <Register />}
       {mode === 'login' ? (
         <button
+          type="button"
           className="btn btn-link"
-          onClick={() => setMode('register')}
+          onClick={() => {
+            setMode('register')
+          }}
         >
-          Don't have an account? Register here.
+          Don&apos;t have an account? Register here.
         </button>
       ) : (
         <button
+          type="button"
           className="btn btn-link"
-          onClick={() => setMode('login')}
+          onClick={() => {
+            setMode('login')
+          }}
         >
           Already a member? Sign in here.
         </button>
