@@ -1,7 +1,7 @@
 'use client'
 import { Spinner } from '../spinner'
-import { signInAction } from './action'
-import type { SignInState } from './action'
+import { signInAction } from './sign-in-action'
+import type { SignInState } from './sign-in-action'
 import { useActionState, useEffect, useState } from 'react'
 
 const initialState: SignInState = { success: undefined, message: '' }
@@ -17,7 +17,7 @@ export function SignIn() {
     <form
       action={formAction}
       onSubmit={() => setPending(true)}
-      className="flex flex-col gap-4 items-center justify-center border border-black p-4"
+      className="flex flex-col gap-4 items-center justify-center"
     >
       <h2 className="text-lg font-bold">Sign In</h2>
       <p className="text-gray-500 italic">

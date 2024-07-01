@@ -1,12 +1,13 @@
 import { auth } from '@/auth'
 import { Grid } from '@/components/grid/grid'
 import { Tile } from '@/components/grid/tile'
-import { SignIn } from '@/components/signIn/sign-in'
+import { LogInForm } from '@/components/logInForm/log-in-form'
+
 import { SignOut } from '@/components/signOut/sign-out'
 import Link from 'next/link'
 
 export default async function Home() {
-  const session = { user: { email: 'keeghan_m@live.com' } } // await auth()
+  const session = await auth()
   return (
     <main className="flex min-h-screen flex-col items-center gap-12 p-24">
       <Link
@@ -55,7 +56,7 @@ export default async function Home() {
             </Grid>
           </>
         ) : (
-          <SignIn />
+          <LogInForm />
         )}
       </div>
     </main>
