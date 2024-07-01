@@ -1,60 +1,52 @@
 'use client'
 import { Spinner } from '../spinner'
 import { signInAction } from './action'
+import type { SignInState } from './action'
 import { useActionState, useEffect, useState } from 'react'
 
+const initialState: SignInState = { success: undefined, message: '' }
 export function SignIn() {
-  const [state, formAction] = useActionState(signInAction, { success: true })
-  const [mode, setMode] = useState<'email' | 'code'>('email')
+  const [state, formAction] = useActionState(signInAction, initialState)
   const [pending, setPending] = useState(false)
 
   useEffect(() => {
     setPending(false)
-  }, [state.success])
+  }, [state])
 
   return (
     <form
       action={formAction}
+      onSubmit={() => setPending(true)}
       className="flex flex-col gap-4 items-center justify-center border border-black p-4"
     >
-      <h2 className="text-lg font-bold">Sign In with your:</h2>
-      <div className="form-control">
-        <label className="label cursor-pointer flex gap-2">
-          <span className="label-text">Email</span>
-          <input
-            type="checkbox"
-            className="toggle bg-black hover:bg-black"
-            defaultChecked={false}
-            onClick={() => setMode(mode === 'email' ? 'code' : 'email')}
-          />
-          <span className="label-text">Member Code</span>
-        </label>
-      </div>
-      {mode === 'code' ? (
-        <input
-          type="text"
-          name="code"
-          placeholder="LCA001"
-          required
-          className="input input-bordered w-full max-w-xs"
-        />
-      ) : (
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          className="input input-bordered w-full max-w-xs"
-        />
-      )}
+      <h2 className="text-lg font-bold">Sign In</h2>
+      <p className="text-gray-500 italic">
+        Enter your membership code to sign in.
+      </p>
+      <input
+        type="text"
+        name="code"
+        placeholder="LCA001"
+        required
+        className="input input-bordered w-full max-w-xs"
+      />
       <button
-        disabled={state.success}
+        disabled={pending}
         type="submit"
-        onClick={() => setPending(true)}
         className="btn btn-primary"
       >
         {pending ? <Spinner /> : 'Log In'}
       </button>
+      {state.message && (
+        <p
+          className={
+            'italic ' +
+            (state.success === true ? 'text-lime-500' : 'text-red-500')
+          }
+        >
+          {state.message}
+        </p>
+      )}
     </form>
   )
 }
