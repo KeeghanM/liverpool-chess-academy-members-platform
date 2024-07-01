@@ -1,4 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+#gridDisplay > *:nth-child(odd) {
+  background: #000;
+  color: white;
+}
+#gridDisplay > *:nth-child(even) {
+  background: #fff;
+  color: black;
+}
+
+@media (min-width: 1024px) {
+  #gridDisplay > *:nth-child(4n + 1) {
+    background: #000;
+    color: white;
+  }
+
+  #gridDisplay > *:nth-child(4n + 2),
+  #gridDisplay > *:nth-child(4n + 3) {
+    background: #fff;
+    color: black;
+  }
+
+  #gridDisplay > *:nth-child(4n + 4) {
+    background: #000;
+    color: white;
+  }
+}
 
