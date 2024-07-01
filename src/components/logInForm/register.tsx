@@ -2,11 +2,12 @@
 import { Spinner } from '../spinner'
 import { registerAction } from './register-action'
 import type { RegisterState } from './register-action'
-import { useActionState, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useFormState } from 'react-dom'
 
 const initialState: RegisterState = { success: undefined, message: '' }
 export function Register() {
-  const [state, formAction] = useActionState(registerAction, initialState)
+  const [state, formAction] = useFormState(registerAction, initialState)
   const [pending, setPending] = useState(false)
 
   useEffect(() => {

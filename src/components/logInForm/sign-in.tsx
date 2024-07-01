@@ -2,11 +2,12 @@
 import { Spinner } from '../spinner'
 import { signInAction } from './sign-in-action'
 import type { SignInState } from './sign-in-action'
-import { useActionState, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useFormState } from 'react-dom'
 
 const initialState: SignInState = { success: undefined, message: '' }
 export function SignIn() {
-  const [state, formAction] = useActionState(signInAction, initialState)
+  const [state, formAction] = useFormState(signInAction, initialState)
   const [pending, setPending] = useState(false)
 
   useEffect(() => {
