@@ -17,7 +17,7 @@ export function EditForm(): JSX.Element {
   })
 
   const mutation = useMutation({
-    mutationFn: async (formData: FormData) => {
+    mutationFn: async (formData: EditDetailForm) => {
       const response = await fetch('/api/member', {
         method: 'POST',
         body: JSON.stringify({ formData }),
@@ -31,7 +31,8 @@ export function EditForm(): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
+    const formData = Object.fromEntries(new FormData(event.currentTarget)) as unknown as EditDetailForm
+
     mutation.mutate(formData)
   }
 
