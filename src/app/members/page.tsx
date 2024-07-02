@@ -26,11 +26,11 @@ export default async function Members(): Promise<JSX.Element> {
 
   return (
     <>
-      <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4">
+      <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
         Members List
       </h1>
-      <div className="overflow-x-auto">
-        <table className="table table-xs">
+      <div className='overflow-x-auto'>
+        <table className='table table-xs'>
           <thead>
             <tr>
               <th>Member Number</th>
@@ -53,7 +53,7 @@ export default async function Members(): Promise<JSX.Element> {
                       member.active ?? member.override ? 'success' : 'warning'
                     }`}
                   >{`LCA${`000${(member.memberNumber ?? 0).toString()}`.slice(
-                    -3
+                    -3,
                   )}`}</span>
                 </td>
                 <td>{member.name}</td>

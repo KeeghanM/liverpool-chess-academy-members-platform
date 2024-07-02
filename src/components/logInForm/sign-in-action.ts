@@ -12,7 +12,7 @@ export interface SignInState {
 
 export async function signInAction(
   previousState: SignInState,
-  formData: FormData
+  formData: FormData,
 ): Promise<SignInState> {
   try {
     const memberCode = formData.get('code') as string | undefined
@@ -37,9 +37,12 @@ export async function signInAction(
     if (!emailAddress) throw new Error('No member found')
 
     // Send the sign in link to the email address
-    await signIn('resend', { email: emailAddress,redirect: false })
+    await signIn('resend', { email: emailAddress, redirect: false })
 
-    return { success: true, message: 'A sign in link has been sent to your email.' }
+    return {
+      success: true,
+      message: 'A sign in link has been sent to your email.',
+    }
   } catch (e) {
     return {
       success: false,

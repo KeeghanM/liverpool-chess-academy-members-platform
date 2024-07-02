@@ -45,10 +45,10 @@ export const memberData = sqliteTable('memberData', {
     .references(() => users.id, { onDelete: 'cascade' }),
   payment_id: text('payment_id'),
   active_payment: integer('active_payment', { mode: 'boolean' }).$defaultFn(
-    () => false
+    () => false,
   ),
   payment_override: integer('payment_override', { mode: 'boolean' }).$defaultFn(
-    () => false
+    () => false,
   ),
   ecf_rating: integer('ecf_rating'),
   online_rating: integer('online_rating'),
@@ -90,7 +90,7 @@ export const accounts = sqliteTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  })
+  }),
 )
 
 export const sessions = sqliteTable('session', {
@@ -112,7 +112,7 @@ export const verificationTokens = sqliteTable(
     compositePk: primaryKey({
       columns: [verificationToken.identifier, verificationToken.token],
     }),
-  })
+  }),
 )
 
 export const authenticators = sqliteTable(
@@ -135,5 +135,5 @@ export const authenticators = sqliteTable(
     compositePK: primaryKey({
       columns: [authenticator.userId, authenticator.credentialID],
     }),
-  })
+  }),
 )

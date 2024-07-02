@@ -31,7 +31,9 @@ export function EditForm(): JSX.Element {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    const formData = Object.fromEntries(new FormData(event.currentTarget)) as unknown as EditDetailForm
+    const formData = Object.fromEntries(
+      new FormData(event.currentTarget),
+    ) as unknown as EditDetailForm
 
     mutation.mutate(formData)
   }
@@ -43,89 +45,89 @@ export function EditForm(): JSX.Element {
   ) : (
     <form onSubmit={handleSubmit}>
       <fieldset
-        className="grid grid-cols-1 md:grid-cols-2 gap-2"
+        className='grid grid-cols-1 md:grid-cols-2 gap-2'
         disabled={mutation.isPending || isPending}
       >
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">Name</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>Name</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
+            className='input input-bordered w-full max-w-xs'
+            type='text'
             defaultValue={data.name ?? ''}
-            name="name"
+            name='name'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">Email</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>Email</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="email"
+            className='input input-bordered w-full max-w-xs'
+            type='email'
             defaultValue={data.email ?? ''}
-            name="email"
+            name='email'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">ECF Rating</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>ECF Rating</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="number"
+            className='input input-bordered w-full max-w-xs'
+            type='number'
             min={0}
             max={3000}
             defaultValue={data.ecfRating ?? ''}
-            name="ecfRating"
+            name='ecfRating'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">Online Rating</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>Online Rating</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="number"
+            className='input input-bordered w-full max-w-xs'
+            type='number'
             min={0}
             max={3000}
             defaultValue={data.onlineRating ?? ''}
-            name="onlineRating"
+            name='onlineRating'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">ECF Number</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>ECF Number</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
+            className='input input-bordered w-full max-w-xs'
+            type='text'
             defaultValue={data.ecfNumber ?? ''}
-            name="ecfNumber"
+            name='ecfNumber'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">FIDE Number</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>FIDE Number</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
+            className='input input-bordered w-full max-w-xs'
+            type='text'
             defaultValue={data.fideNumber ?? ''}
-            name="fideNumber"
+            name='fideNumber'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">LiChess Username</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>LiChess Username</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
+            className='input input-bordered w-full max-w-xs'
+            type='text'
             defaultValue={data.lichessUsername ?? ''}
-            name="lichessUsername"
+            name='lichessUsername'
           />
         </label>
-        <label className="form-control w-full max-w-xs">
-          <span className="label-text">Chess.com Username</span>
+        <label className='form-control w-full max-w-xs'>
+          <span className='label-text'>Chess.com Username</span>
           <input
-            className="input input-bordered w-full max-w-xs"
-            type="text"
+            className='input input-bordered w-full max-w-xs'
+            type='text'
             defaultValue={data.chesscomUsername ?? ''}
-            name="chesscomUsername"
+            name='chesscomUsername'
           />
         </label>
         <button
-          type="submit"
+          type='submit'
           disabled={mutation.isPending}
-          className="btn btn-primary"
+          className='btn btn-primary'
         >
           {mutation.isPending ? (
             <>

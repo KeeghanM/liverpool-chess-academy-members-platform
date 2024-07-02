@@ -15,14 +15,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>): JSX.Element {
   return (
-    <html
-      lang="en"
-      data-theme="light"
-    >
+    <html lang='en' data-theme='light'>
       <body>
         <Header />
         <Providers>
-          <main className="flex min-h-screen flex-col items-center gap-12 p-24">
+          <main className='flex min-h-screen flex-col items-center gap-12 p-24'>
             {children}
           </main>
           <ReactQueryDevtools initialIsOpen={false} />

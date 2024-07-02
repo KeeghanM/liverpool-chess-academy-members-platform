@@ -15,38 +15,37 @@ export function SignIn(): JSX.Element {
   }, [state])
 
   return state.message ? (
-        <p
-          className={
-            state.success === true ? 'text-lime-600 text-xl font-bold' : 'text-red-500 italic'
-          }
-        >
-          {state.message}
-        </p>
-      ) :
+    <p
+      className={
+        state.success === true
+          ? 'text-lime-600 text-xl font-bold'
+          : 'text-red-500 italic'
+      }
+    >
+      {state.message}
+    </p>
+  ) : (
     <form
       action={formAction}
       onSubmit={() => {
         setPending(true)
       }}
-      className="flex flex-col gap-4 items-center justify-center"
+      className='flex flex-col gap-4 items-center justify-center'
     >
-      <h2 className="text-lg font-bold">Sign In</h2>
-      <p className="text-gray-500 italic">
+      <h2 className='text-lg font-bold'>Sign In</h2>
+      <p className='text-gray-500 italic'>
         Enter your membership code to sign in.
       </p>
       <input
-        type="text"
-        name="code"
-        placeholder="LCA001"
+        type='text'
+        name='code'
+        placeholder='LCA001'
         required
-        className="input input-bordered w-full max-w-xs"
+        className='input input-bordered w-full max-w-xs'
       />
-      <button
-        disabled={pending}
-        type="submit"
-        className="btn btn-primary"
-      >
+      <button disabled={pending} type='submit' className='btn btn-primary'>
         {pending ? <Spinner /> : 'Log In'}
       </button>
     </form>
+  )
 }

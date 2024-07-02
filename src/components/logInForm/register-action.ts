@@ -12,7 +12,7 @@ export interface RegisterState {
 
 export async function registerAction(
   previousState: RegisterState,
-  formData: FormData
+  formData: FormData,
 ): Promise<{
   success: boolean
   message: string
@@ -33,7 +33,7 @@ export async function registerAction(
       throw new Error('A member with that email address already exists')
 
     // Send the sign in link to the email address
-    await signIn('resend', { email,redirect: false })
+    await signIn('resend', { email, redirect: false })
     return {
       success: true,
       message: 'A link has been sent to your email to finalise registration.',
