@@ -14,7 +14,15 @@ export function SignIn(): JSX.Element {
     setPending(false)
   }, [state])
 
-  return (
+  return state.message ? (
+        <p
+          className={
+            state.success === true ? 'text-lime-600 text-xl font-bold' : 'text-red-500 italic'
+          }
+        >
+          {state.message}
+        </p>
+      ) :
     <form
       action={formAction}
       onSubmit={() => {
@@ -40,15 +48,5 @@ export function SignIn(): JSX.Element {
       >
         {pending ? <Spinner /> : 'Log In'}
       </button>
-      {state.message ? (
-        <p
-          className={`italic ${
-            state.success === true ? 'text-lime-500' : 'text-red-500'
-          }`}
-        >
-          {state.message}
-        </p>
-      ) : null}
     </form>
-  )
 }
