@@ -14,7 +14,9 @@ export const roleMappings = sqliteTable('roleMapping', {
   userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  roleId: integer('roleId').notNull(),
+  roleId: integer('roleId')
+    .notNull()
+    .references(() => roles.id, { onDelete: 'cascade' }),
 })
 
 export const teams = sqliteTable('team', {
