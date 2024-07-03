@@ -15,7 +15,7 @@ export async function signInAction(
   formData: FormData,
 ): Promise<SignInState> {
   try {
-    const memberCode = formData.get('code') as string | undefined
+    const memberCode = formData.get('code')?.toString().toUpperCase()
     if (!memberCode) throw new Error('Invalid form data')
 
     // Code comes in as LCA000 - which is just a zero padded version of the DB ID
