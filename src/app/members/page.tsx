@@ -85,9 +85,48 @@ export default async function Members(): Promise<JSX.Element> {
                     ''
                   )}
                 </td>
-                <td>{member.fide_id}</td>
-                <td>{member.lichess_username}</td>
-                <td>{member.chesscom_username}</td>
+                <td>
+                  {member.fide_id ? (
+                    <a
+                      href={`https://ratings.fide.com/profile/${member.fide_id}`}
+                      className='link link-accent'
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      {member.fide_id}
+                    </a>
+                  ) : (
+                    ''
+                  )}
+                </td>
+                <td>
+                  {member.lichess_username ? (
+                    <a
+                      href={`https://lichess.org/@/${member.lichess_username}`}
+                      className='link link-accent'
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      {member.lichess_username}
+                    </a>
+                  ) : (
+                    ''
+                  )}
+                </td>
+                <td>
+                  {member.chesscom_username ? (
+                    <a
+                      href={`https://www.chess.com/member/${member.chesscom_username}`}
+                      className='link link-accent'
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      {member.chesscom_username}
+                    </a>
+                  ) : (
+                    ''
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
