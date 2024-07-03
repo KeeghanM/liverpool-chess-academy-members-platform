@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import { eq, ne } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 import { NextResponse } from 'next/server'
 import { db } from '@/db/db'
 import { users, memberData } from '@/db/schema'

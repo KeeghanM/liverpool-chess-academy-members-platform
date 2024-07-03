@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { and, asc, desc, eq } from 'drizzle-orm'
+import { alias } from 'drizzle-orm/sqlite-core'
 import { auth } from '@/auth'
 import { db } from '@/db/db'
 import {
@@ -11,7 +12,6 @@ import {
   users,
 } from '@/db/schema'
 import type { TeamType } from '@/components/team/types'
-import { alias } from 'drizzle-orm/sqlite-core'
 
 export async function GET(): Promise<NextResponse> {
   try {

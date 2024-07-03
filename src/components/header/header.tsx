@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
-import { SignOut } from '../signOut/sign-out'
 import { db } from '@/db/db'
 import { memberData } from '@/db/schema'
+import { SignOut } from '../signOut/sign-out'
 
 export async function Header(): Promise<JSX.Element> {
   const session = await auth()
