@@ -10,7 +10,7 @@ import {
   teams,
   users,
 } from '@/db/schema'
-import type { TeamMember, TeamType } from '@/components/team/team'
+import type { TeamMember, TeamType } from '@/components/team/types'
 
 export async function GET(): Promise<NextResponse> {
   try {

@@ -2,7 +2,8 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '../spinner'
-import { Team, TeamType } from './team'
+import type { TeamType } from './types'
+import { Team } from './team'
 
 export function TeamList({
   hasAdmin,
