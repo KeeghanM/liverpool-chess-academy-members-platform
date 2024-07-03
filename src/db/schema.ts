@@ -1,8 +1,6 @@
 import { integer, sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 /* MAIN SCHEMA */
 export const roles = sqliteTable('role', {
   id: integer('id').primaryKey(),
