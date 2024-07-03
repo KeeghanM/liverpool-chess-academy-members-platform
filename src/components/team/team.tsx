@@ -29,11 +29,17 @@ export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
           <tr>
             <th>Name</th>
             <th>Rating</th>
+            {hasAdmin ? <th>Actions</th> : null}
           </tr>
         </thead>
         <tbody>
           {members.map((member) => (
-            <PlayerRow key={member.name} member={member} />
+            <PlayerRow
+              key={member.name}
+              {...member}
+              hasAdmin={hasAdmin}
+              teamId={team.id}
+            />
           ))}
         </tbody>
       </table>

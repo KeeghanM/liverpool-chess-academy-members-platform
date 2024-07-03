@@ -1,4 +1,5 @@
 export interface TeamMember {
+  id: string
   name: string | null
   role: 'player' | 'substitute'
   rating: number | null

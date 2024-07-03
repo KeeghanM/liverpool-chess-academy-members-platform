@@ -1,29 +1,50 @@
-import type { TeamMember } from './types'
+'use client'
+import { EditPlayer } from './edit-player'
 
 interface PlayerRowProps {
-  member: TeamMember
+  id: string
+  name: string | null
+  role: 'player' | 'substitute'
+  rating: number | null
+  hasAdmin: boolean
+  teamId: number
 }
-export function PlayerRow({ member }: PlayerRowProps): JSX.Element {
+export function PlayerRow({
+  id,
+  name,
+  role,
+  rating,
+  hasAdmin,
+  teamId,
+}: PlayerRowProps): JSX.Element {
   return (
-    <tr key={member.name}>
-      <td className='flex flex-row gap-1 items-center'>
+    <tr key={name}>
+      <td>
         <div
           className='tooltip'
-          data-tip={
-            member.role.charAt(0).toUpperCase() + member.role.substring(1)
-          }
+          data-tip={role.charAt(0).toUpperCase() + role.substring(1)}
         >
           <span
             className={`badge badge-${
-              member.role === 'player' ? 'success' : 'warning'
-            }`}
+              role === 'player' ? 'success' : 'warning'
+            } mr-2`}
           >
-            {member.role.charAt(0).toUpperCase()}
+            {role.charAt(0).toUpperCase()}
           </span>
         </div>
-        {member.name}
+        {name}
       </td>
-      <td>{member.rating}</td>
+      <td>{rating}</td>
+      {hasAdmin ? (
+        <td>
+          <EditPlayer
+            teamId={teamId}
+            playerId={id}
+            name={name ?? ''}
+            role={role}
+          />
+        </td>
+      ) : null}
     </tr>
   )
 }

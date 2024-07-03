@@ -30,17 +30,21 @@ export async function GET(): Promise<NextResponse> {
 
     const teamList: TeamType[] = await Promise.all(
       dbTeams.map(async (team) => {
-        const members: TeamMember[] = await db
+        const members = (await db
           .select({
+            id: users.id,
             name: users.name,
             role: teamMembers.role,
             rating: memberData.ecf_rating,
           })
           .from(teamMembers)
-          .leftJoin(users, eq(teamMembers.userId, users.id))
-          .leftJoin(memberData, eq(users.id, memberData.userId))
+          .fullJoin(users, eq(teamMembers.userId, users.id))
+          .fullJoin(memberData, eq(users.id, memberData.userId))
           .where(eq(teamMembers.teamId, team.id))
-          .orderBy(asc(teamMembers.role), desc(memberData.ecf_rating))
+          .orderBy(
+            asc(teamMembers.role),
+            desc(memberData.ecf_rating),
+          )) as TeamMember[]
 
         return {
           id: team.id,
