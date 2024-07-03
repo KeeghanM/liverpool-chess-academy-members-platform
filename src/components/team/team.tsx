@@ -1,4 +1,6 @@
+'use client'
 import { EditTeam } from './edit-team'
+import { AddPlayer } from './add-player'
 
 export interface TeamMember {
   name: string | null
@@ -9,17 +11,22 @@ export interface TeamMember {
 export interface TeamType {
   id: number
   name: string
-  captain: string | null
+  captain: {
+    id: string
+    name: string | null
+  } | null
   members: TeamMember[]
 }
 
 interface TeamProps {
   team: TeamType
   hasAdmin: boolean
+  userId: string
 }
 
-export function Team({ team, hasAdmin }: TeamProps): JSX.Element {
+export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
   const { name, captain, members } = team
+
   return (
     <div className='border border-black p-4 flex flex-col gap-4 items-center justify-center'>
       <h3 className='text-lg font-bold'>
@@ -29,7 +36,7 @@ export function Team({ team, hasAdmin }: TeamProps): JSX.Element {
         ) : null}
       </h3>
       <p className='text-gray-500 italic'>
-        Captain: {captain ? captain : 'No Captain'}
+        Captain: {captain ? captain.name : 'No Captain'}
       </p>
       <table className='table table-sm table-zebra'>
         <thead className='text-black'>
@@ -64,6 +71,9 @@ export function Team({ team, hasAdmin }: TeamProps): JSX.Element {
           ))}
         </tbody>
       </table>
+      {hasAdmin || userId === captain?.id ? (
+        <AddPlayer teamId={team.id} />
+      ) : null}
     </div>
   )
 }

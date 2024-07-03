@@ -18,30 +18,40 @@ export async function GET(): Promise<NextResponse> {
     if (!session?.user?.id)
       return NextResponse.json('Unauthorised', { status: 401 })
 
-    const teamList = (await db
+    const dbTeams = await db
       .select({
         id: teams.id,
         name: teams.name,
-        captain: users.name,
+        captainId: teams.captainId,
+        captainName: users.name,
       })
       .from(teams)
-      .leftJoin(users, eq(teams.captainId, users.id))) as TeamType[]
+      .leftJoin(users, eq(teams.captainId, users.id))
 
-    for (const team of teamList) {
-      const members: TeamMember[] = await db
-        .select({
-          name: users.name,
-          role: teamMembers.role,
-          rating: memberData.ecf_rating,
-        })
-        .from(teamMembers)
-        .leftJoin(users, eq(teamMembers.userId, users.id))
-        .leftJoin(memberData, eq(users.id, memberData.userId))
-        .where(eq(teamMembers.teamId, team.id))
-        .orderBy(asc(teamMembers.role), desc(memberData.ecf_rating))
+    const teamList: TeamType[] = await Promise.all(
+      dbTeams.map(async (team) => {
+        const members: TeamMember[] = await db
+          .select({
+            name: users.name,
+            role: teamMembers.role,
+            rating: memberData.ecf_rating,
+          })
+          .from(teamMembers)
+          .leftJoin(users, eq(teamMembers.userId, users.id))
+          .leftJoin(memberData, eq(users.id, memberData.userId))
+          .where(eq(teamMembers.teamId, team.id))
+          .orderBy(asc(teamMembers.role), desc(memberData.ecf_rating))
 
-      team.members = members
-    }
+        return {
+          id: team.id,
+          name: team.name,
+          captain: team.captainId
+            ? { id: team.captainId, name: team.captainName }
+            : null,
+          members,
+        }
+      }),
+    )
 
     return NextResponse.json(teamList)
   } catch (error) {

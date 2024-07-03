@@ -136,7 +136,7 @@ export function EditTeam({ id, name }: EditTeamProps): JSX.Element {
               >
                 {editMutation.isPending ? (
                   <>
-                    Savings <Spinner />
+                    Saving <Spinner />
                   </>
                 ) : (
                   'Save'
