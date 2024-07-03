@@ -16,14 +16,14 @@ export async function GET(): Promise<NextResponse> {
         id: users.id,
         email: users.email,
         paymentId: memberData.payment_id,
+        paymentOverride: memberData.payment_override,
       })
       .from(users)
-      .fullJoin(memberData, eq(users.id, memberData.userId))
-      .where(ne(memberData.payment_override, true))
+      .fullJoin(memberData, eq(memberData.userId, users.id))
 
     await Promise.all(
       membersToCheck.map(async (member) => {
-        if (!member.email || !member.id) return
+        if (!member.email || !member.id || member.paymentOverride) return
 
         let stripeCustomerId: string | null | undefined = member.paymentId
         if (!stripeCustomerId) {
