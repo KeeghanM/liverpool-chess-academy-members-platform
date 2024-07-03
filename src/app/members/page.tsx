@@ -48,13 +48,24 @@ export default async function Members(): Promise<JSX.Element> {
             {memberList.map((member) => (
               <tr key={member.memberNumber}>
                 <td>
-                  <span
-                    className={`badge badge-${
-                      member.active ?? member.override ? 'success' : 'warning'
-                    }`}
-                  >{`LCA${`000${(member.memberNumber ?? 0).toString()}`.slice(
-                    -3,
-                  )}`}</span>
+                  <div
+                    className='tooltip'
+                    data-tip={
+                      member.active === true || member.override === true
+                        ? 'Paid Up'
+                        : 'Unpaid'
+                    }
+                  >
+                    <span
+                      className={`badge badge-${
+                        member.active === true || member.override === true
+                          ? 'success'
+                          : 'warning'
+                      }`}
+                    >{`LCA${`000${(member.memberNumber ?? 0).toString()}`.slice(
+                      -3,
+                    )}`}</span>
+                  </div>
                 </td>
                 <td>{member.name}</td>
                 <td>{member.email}</td>
