@@ -10,7 +10,8 @@ import {
   teams,
   users,
 } from '@/db/schema'
-import type { TeamMember, TeamType } from '@/components/team/types'
+import type { TeamType } from '@/components/team/types'
+import { alias } from 'drizzle-orm/sqlite-core'
 
 export async function GET(): Promise<NextResponse> {
   try {
@@ -18,44 +19,51 @@ export async function GET(): Promise<NextResponse> {
     if (!session?.user?.id)
       return NextResponse.json('Unauthorised', { status: 401 })
 
-    const dbTeams = await db
+    const members = alias(users, 'members')
+    const dbTeamsWithMembers = await db
       .select({
-        id: teams.id,
-        name: teams.name,
+        teamId: teams.id,
+        teamName: teams.name,
         captainId: teams.captainId,
         captainName: users.name,
+        memberId: members.id,
+        memberName: members.name,
+        memberRole: teamMembers.role,
+        memberRating: memberData.ecf_rating,
       })
       .from(teams)
       .leftJoin(users, eq(teams.captainId, users.id))
+      .leftJoin(teamMembers, eq(teams.id, teamMembers.teamId))
+      .leftJoin(members, eq(teamMembers.userId, members.id))
+      .leftJoin(memberData, eq(members.id, memberData.userId))
+      .orderBy(asc(teamMembers.role), desc(memberData.ecf_rating))
 
-    const teamList: TeamType[] = await Promise.all(
-      dbTeams.map(async (team) => {
-        const members = (await db
-          .select({
-            id: users.id,
-            name: users.name,
-            role: teamMembers.role,
-            rating: memberData.ecf_rating,
-          })
-          .from(teamMembers)
-          .fullJoin(users, eq(teamMembers.userId, users.id))
-          .fullJoin(memberData, eq(users.id, memberData.userId))
-          .where(eq(teamMembers.teamId, team.id))
-          .orderBy(
-            asc(teamMembers.role),
-            desc(memberData.ecf_rating),
-          )) as TeamMember[]
+    const teamList: TeamType[] = []
+    const teamMap: Record<number, TeamType> = {}
 
-        return {
-          id: team.id,
-          name: team.name,
-          captain: team.captainId
-            ? { id: team.captainId, name: team.captainName }
+    dbTeamsWithMembers.forEach((row) => {
+      if (!teamMap[row.teamId]) {
+        const newTeam = {
+          id: row.teamId,
+          name: row.teamName,
+          captain: row.captainId
+            ? { id: row.captainId, name: row.captainName }
             : null,
-          members,
+          members: [],
         }
-      }),
-    )
+        teamMap[row.teamId] = newTeam
+        teamList.push(newTeam)
+      }
+
+      if (row.memberId) {
+        teamMap[row.teamId]?.members.push({
+          id: row.memberId,
+          name: row.memberName,
+          role: row.memberRole ?? 'player',
+          rating: row.memberRating,
+        })
+      }
+    })
 
     return NextResponse.json(teamList)
   } catch (error) {

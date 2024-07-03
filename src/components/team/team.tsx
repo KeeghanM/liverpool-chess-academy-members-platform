@@ -14,7 +14,7 @@ export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
   const { name, captain, members } = team
 
   return (
-    <div className='border border-black p-4 flex flex-col gap-4 items-center justify-center'>
+    <div className='border border-black p-4 flex flex-col gap-4 items-center'>
       <h3 className='text-lg font-bold'>
         {name}
         {hasAdmin ? (

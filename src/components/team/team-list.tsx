@@ -31,9 +31,11 @@ export function TeamList({
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2'>
-      {data.map((team) => (
-        <Team key={team.id} team={team} hasAdmin={hasAdmin} userId={userId} />
-      ))}
+      {data
+        .sort((a, b) => a.id - b.id)
+        .map((team) => (
+          <Team key={team.id} team={team} hasAdmin={hasAdmin} userId={userId} />
+        ))}
     </div>
   )
 }

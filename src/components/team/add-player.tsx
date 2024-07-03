@@ -47,7 +47,11 @@ export function AddPlayer({ teamId }: AddPlayerProps): JSX.Element {
 
   return (
     <>
-      <button className='btn btn-primary' type='button' onClick={openModal}>
+      <button
+        className='btn btn-primary mt-auto'
+        type='button'
+        onClick={openModal}
+      >
         Add Player
       </button>
       <dialog id={modalId} className='modal'>
