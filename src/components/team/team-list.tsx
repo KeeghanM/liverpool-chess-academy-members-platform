@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '../spinner'
 import { Team, TeamType } from './team'
 
-export function TeamList(): JSX.Element {
+export function TeamList({ hasAdmin }: { hasAdmin: boolean }): JSX.Element {
   const { isPending, error, data } = useQuery({
     queryKey: ['teams'],
     queryFn: async () => {
@@ -25,7 +25,7 @@ export function TeamList(): JSX.Element {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
       {data.map((team) => (
-        <Team key={team.id} {...team} />
+        <Team key={team.id} team={team} hasAdmin={hasAdmin} />
       ))}
     </div>
   )

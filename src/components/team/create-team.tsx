@@ -18,7 +18,7 @@ export function CreateTeam() {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const response = await fetch('/api/teams/create', {
+      const response = await fetch('/api/teams', {
         method: 'POST',
         body: JSON.stringify({ name }),
       })

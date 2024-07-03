@@ -23,7 +23,7 @@ export default async function Teams(): Promise<JSX.Element> {
       <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
         Teams
       </h1>
-      <TeamList />
+      <TeamList hasAdmin={hasAdmin} />
       {hasAdmin ? <CreateTeam /> : null}
     </>
   )

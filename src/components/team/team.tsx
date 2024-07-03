@@ -1,3 +1,5 @@
+import { EditTeam } from './edit-team'
+
 export interface TeamMember {
   name: string | null
   role: 'player' | 'substitute'
@@ -10,10 +12,22 @@ export interface TeamType {
   captain: string | null
   members: TeamMember[]
 }
-export function Team({ name, captain, members }: TeamType): JSX.Element {
+
+interface TeamProps {
+  team: TeamType
+  hasAdmin: boolean
+}
+
+export function Team({ team, hasAdmin }: TeamProps): JSX.Element {
+  const { name, captain, members } = team
   return (
     <div className='border border-black p-4 flex flex-col gap-4 items-center justify-center'>
-      <h3 className='text-lg font-bold'>{name}</h3>
+      <h3 className='text-lg font-bold'>
+        {name}
+        {hasAdmin ? (
+          <EditTeam key={team.id} id={team.id} name={team.name} />
+        ) : null}
+      </h3>
       <p className='text-gray-500 italic'>
         Captain: {captain ? captain : 'No Captain'}
       </p>

@@ -30,7 +30,9 @@ export const teamMembers = sqliteTable('teamMember', {
   userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
-  teamId: integer('teamId').notNull(),
+  teamId: integer('teamId')
+    .notNull()
+    .references(() => teams.id, { onDelete: 'cascade' }),
   role: text('role', { enum: ['player', 'substitute'] })
     .$default(() => 'player')
     .notNull(),
