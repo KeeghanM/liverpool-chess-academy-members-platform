@@ -13,6 +13,7 @@ interface TeamProps {
 export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
   const { name, captain, members } = team
 
+  const actions = hasAdmin || userId === captain?.id
   return (
     <div className='border border-black p-4 flex flex-col gap-4 items-center'>
       <h3 className='text-lg font-bold'>
@@ -29,7 +30,7 @@ export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
           <tr>
             <th>Name</th>
             <th>Rating</th>
-            {hasAdmin ? <th>Actions</th> : null}
+            {actions ? <th>Actions</th> : null}
           </tr>
         </thead>
         <tbody>
@@ -37,15 +38,13 @@ export function Team({ team, hasAdmin, userId }: TeamProps): JSX.Element {
             <PlayerRow
               key={member.name}
               {...member}
-              hasAdmin={hasAdmin}
+              hasAdmin={actions}
               teamId={team.id}
             />
           ))}
         </tbody>
       </table>
-      {hasAdmin || userId === captain?.id ? (
-        <AddPlayer teamId={team.id} />
-      ) : null}
+      {actions ? <AddPlayer teamId={team.id} /> : null}
     </div>
   )
 }
