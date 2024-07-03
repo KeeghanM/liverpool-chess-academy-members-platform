@@ -12,7 +12,11 @@ export async function Header(): Promise<JSX.Element> {
           LCA: Members
         </Link>
       </div>
-
+      <div className='flex-1'>
+        <span className='badge badge-primary text-white text-lg p-4'>
+          LCA001
+        </span>
+      </div>
       {session?.user ? (
         <div className='flex-none'>
           <SignOut />

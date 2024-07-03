@@ -27,7 +27,7 @@ export default async function Membership(): Promise<JSX.Element> {
     <div>
       <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex gap-4 items-center'>
         My Membership
-        {user.active ?? user.override ? (
+        {user.active === true || user.override === true ? (
           <span className='badge badge-success'>Paid Up</span>
         ) : (
           <span className='badge badge-error'>Unpaid</span>

@@ -19,7 +19,7 @@ export default function RootLayout({
       <body>
         <Header />
         <Providers>
-          <main className='flex min-h-screen flex-col items-center gap-12 p-24'>
+          <main className='flex min-h-screen flex-col items-center gap-12 p-4 md:p-12 lg:p-24'>
             {children}
           </main>
           <ReactQueryDevtools initialIsOpen={false} />

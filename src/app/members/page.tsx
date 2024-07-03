@@ -29,7 +29,7 @@ export default async function Members(): Promise<JSX.Element> {
       <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
         Members List
       </h1>
-      <div className='overflow-x-auto'>
+      <div className='overflow-x-auto max-w-[100vw]'>
         <table className='table table-xs'>
           <thead>
             <tr>
@@ -71,7 +71,20 @@ export default async function Members(): Promise<JSX.Element> {
                 <td>{member.email}</td>
                 <td>{member.ecf_rating}</td>
                 <td>{member.online_rating}</td>
-                <td>{member.ecf_number}</td>
+                <td>
+                  {member.ecf_number ? (
+                    <a
+                      href={`https://rating.englishchess.org.uk/v2/new/player.php?ECF_code=${member.ecf_number}`}
+                      className='link link-accent'
+                      target='_blank'
+                      rel='noreferrer noopener'
+                    >
+                      {member.ecf_number}
+                    </a>
+                  ) : (
+                    ''
+                  )}
+                </td>
                 <td>{member.fide_id}</td>
                 <td>{member.lichess_username}</td>
                 <td>{member.chesscom_username}</td>
