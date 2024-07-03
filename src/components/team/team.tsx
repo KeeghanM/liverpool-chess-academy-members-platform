@@ -2,7 +2,7 @@
 import { EditTeam } from './edit-team'
 import { AddPlayer } from './add-player'
 import { PlayerRow } from './player-row'
-import { TeamType } from './types'
+import type { TeamType } from './types'
 
 interface TeamProps {
   team: TeamType

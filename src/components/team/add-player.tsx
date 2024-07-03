@@ -16,7 +16,7 @@ export function AddPlayer({ teamId }: AddPlayerProps): JSX.Element {
     'player',
   )
 
-  function openModal() {
+  function openModal(): void {
     const modal = document.getElementById(modalId) as HTMLDialogElement
     modal.showModal()
   }
@@ -90,6 +90,7 @@ export function AddPlayer({ teamId }: AddPlayerProps): JSX.Element {
                 </p>
               ) : null}
               <button
+                type='button'
                 className='btn btn-primary'
                 disabled={mutation.isPending}
                 onClick={() => {
@@ -108,7 +109,7 @@ export function AddPlayer({ teamId }: AddPlayerProps): JSX.Element {
           )}
         </div>
         <form method='dialog' className='modal-backdrop'>
-          <button>close</button>
+          <button type='button'>close</button>
         </form>
       </dialog>
     </>

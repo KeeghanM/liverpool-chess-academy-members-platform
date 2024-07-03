@@ -1,8 +1,8 @@
+import { NextResponse } from 'next/server'
+import { and, eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import { db } from '@/db/db'
 import { teamMembers } from '@/db/schema'
-import { and, eq } from 'drizzle-orm'
-import { NextResponse } from 'next/server'
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
@@ -25,7 +25,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     await db
       .insert(teamMembers)
-      .values({ teamId: teamId, userId: playerId, role: playerRole })
+      .values({ teamId, userId: playerId, role: playerRole })
 
     return NextResponse.json('Player added successfully')
   } catch (error) {

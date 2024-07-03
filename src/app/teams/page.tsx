@@ -1,9 +1,9 @@
+import { and, eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import { CreateTeam } from '@/components/team/create-team'
 import { TeamList } from '@/components/team/team-list'
 import { db } from '@/db/db'
 import { roleMappings, roles } from '@/db/schema'
-import { and, eq } from 'drizzle-orm'
 
 export default async function Teams(): Promise<JSX.Element> {
   const session = await auth()

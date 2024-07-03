@@ -4,11 +4,11 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Spinner } from '../spinner'
 
-export function CreateTeam() {
+export function CreateTeam(): JSX.Element {
   const queryClient = useQueryClient()
   const [name, setName] = useState('')
 
-  function openModal() {
+  function openModal(): void {
     setName('')
     const modal = document.getElementById(
       'create-team-modal',
@@ -35,7 +35,7 @@ export function CreateTeam() {
 
   return (
     <>
-      <button className='btn btn-primary' onClick={openModal}>
+      <button type='button' className='btn btn-primary' onClick={openModal}>
         Create New Team
       </button>
       <dialog id='create-team-modal' className='modal'>
@@ -57,6 +57,7 @@ export function CreateTeam() {
               </p>
             ) : null}
             <button
+              type='button'
               className='btn btn-primary'
               disabled={mutation.isPending || name.length < 5}
               onClick={() => {
@@ -74,7 +75,7 @@ export function CreateTeam() {
           </div>
         </div>
         <form method='dialog' className='modal-backdrop'>
-          <button>close</button>
+          <button type='button'>close</button>
         </form>
       </dialog>
     </>
