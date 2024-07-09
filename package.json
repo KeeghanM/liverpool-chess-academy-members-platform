@@ -13,8 +13,8 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^1.2.0",
     "@formkit/auto-animate": "^0.8.2",
-    "@libsql/client": "^0.6.2",
     "@tanstack/react-query": "^5.40.1",
+    "@uploadthing/react": "^6.7.2",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.31.1",
     "next": "14.2.3",
@@ -22,9 +22,11 @@
     "react": "^18",
     "react-dom": "^18",
     "resend": "^3.3.0",
-    "stripe": "^16.1.0"
+    "stripe": "^16.1.0",
+    "uploadthing": "^6.13.2"
   },
   "devDependencies": {
+    "@libsql/client": "^0.7.0",
     "@next/eslint-plugin-next": "^14.2.3",
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@tanstack/react-query-devtools": "^5.40.1",
