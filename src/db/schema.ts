@@ -1,4 +1,3 @@
-import { sql } from 'drizzle-orm'
 import { integer, sqliteTable, text, primaryKey } from 'drizzle-orm/sqlite-core'
 import type { AdapterAccountType } from 'next-auth/adapters'
 
@@ -59,17 +58,6 @@ export const memberData = sqliteTable('memberData', {
   lichess_username: text('lichess_username'),
   chesscom_username: text('chesscom_username'),
   fide_id: text('fide_id'),
-})
-
-export const resources = sqliteTable('resource', {
-  id: integer('id').primaryKey({ autoIncrement: true }),
-  name: text('name').notNull(),
-  url: text('url').notNull(),
-  author: text('author').notNull(),
-  type: text('type', { enum: ['video', 'pgn', 'article'] }).notNull(),
-  dateAdded: integer('dateAdded', { mode: 'timestamp' })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
 })
 
 /* AUTHENTICATION SCHEMA */

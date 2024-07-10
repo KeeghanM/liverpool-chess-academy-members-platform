@@ -8,7 +8,9 @@ export function Providers({
   children: React.ReactNode
 }): JSX.Element {
   // eslint-disable-next-line -- hook-use-state, I don't want a setter here
-  const [client] = useState(() => new QueryClient())
+  const [queryClient] = useState(() => new QueryClient())
 
-  return <QueryClientProvider client={client}>{children}</QueryClientProvider>
+  return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  )
 }

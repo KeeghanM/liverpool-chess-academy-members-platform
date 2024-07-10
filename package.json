@@ -8,11 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "drizzle-kit generate",
-    "migrate": "drizzle-kit migrate"
+    "migrate": "drizzle-kit migrate",
+    "slicemachine": "start-slicemachine"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.2.0",
     "@formkit/auto-animate": "^0.8.2",
+    "@prismicio/client": "^7.6.0",
+    "@prismicio/next": "^1.6.0",
+    "@prismicio/react": "^2.8.0",
     "@tanstack/react-query": "^5.40.1",
     "@uploadthing/react": "^6.7.2",
     "dotenv": "^16.4.5",
@@ -21,13 +25,14 @@
     "next-auth": "^5.0.0-beta.19",
     "react": "^18",
     "react-dom": "^18",
+    "react-select": "^5.8.0",
     "resend": "^3.3.0",
-    "stripe": "^16.1.0",
-    "uploadthing": "^6.13.2"
+    "stripe": "^16.1.0"
   },
   "devDependencies": {
     "@libsql/client": "^0.7.0",
     "@next/eslint-plugin-next": "^14.2.3",
+    "@slicemachine/adapter-next": "^0.3.42",
     "@tanstack/eslint-plugin-query": "^5.35.6",
     "@tanstack/react-query-devtools": "^5.40.1",
     "@types/node": "^20",
@@ -39,6 +44,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",
+    "slice-machine-ui": "^2.2.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

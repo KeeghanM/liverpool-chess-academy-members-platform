@@ -1,0 +1,10 @@
+{
+  "id": "home_page_sections",
+  "label": "Home Page Sections",
+  "repeatable": true,
+  "json": {
+    "Main": {}
+  },
+  "status": true,
+  "format": "custom"
+}

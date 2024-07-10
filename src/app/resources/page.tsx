@@ -1,9 +1,9 @@
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import { db } from '@/db/db'
-import { memberData, resources, roleMappings } from '@/db/schema'
+import { memberData } from '@/db/schema'
 import { ResourceList } from '@/components/resources/list'
-import { UploadResource } from '@/components/resources/upload'
+import { createClient } from '@/prismicio'
 
 export default async function Resources(): Promise<JSX.Element> {
   const session = await auth()
@@ -14,45 +14,37 @@ export default async function Resources(): Promise<JSX.Element> {
       </h1>
     )
 
-  const accessRules = await db
+  const canView = await db
     .select({
       activePayment: memberData.active_payment,
-      paymentOverride: memberData.payment_override,
-      admin: roleMappings.roleId
+      paymentOverride: memberData.payment_override
     })
     .from(memberData)
-    .leftJoin(roleMappings,eq(
-      roleMappings.roleId, 2 // 2 === admin
-    ))
     .where(eq(memberData.userId, session.user.id))
     .then((data) => {
-      return {
-        canView: data[0]?.activePayment === true || data[0]?.paymentOverride === true,
-        canAdd: data[0]?.admin === 2}
+      return data[0]?.activePayment === true || data[0]?.paymentOverride === true
       
     })
 
-  if (!accessRules.canView)
+  if (!canView)
     return (
       <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
         You need an active/paid membership to access resources.
       </h1>
     )
 
-  const resourceList = await db.select({
-    id: resources.id,
-    fileName: resources.name,
-    dateAdded: resources.dateAdded,
-    fileUrl: resources.url,
-    author: resources.author
-  }).from(resources)
+    const client = createClient();
+    const resources = await client.getAllByType("resource")
+
+    const allTags:string[] = []
+    resources.forEach(r=>{r.tags.forEach(t=>{allTags.push(t)})})
+    const tags = [...new Set(allTags)]
 
   return (<>
     <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
       Resources
     </h1>
-    {accessRules.canAdd ? <UploadResource /> : null}
-    <ResourceList resources={resourceList} />
+    <ResourceList tags={tags} resources={resources} />
     </>
   )
 }
