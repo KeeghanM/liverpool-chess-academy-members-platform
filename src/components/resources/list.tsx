@@ -90,6 +90,7 @@ export function ResourceList({
               uploadDate={new Date(resource.first_publication_date)}
               type={resource.data.type}
               tags={resource.tags}
+              slug={resource.uid}
             />
           ))}
         </tbody>

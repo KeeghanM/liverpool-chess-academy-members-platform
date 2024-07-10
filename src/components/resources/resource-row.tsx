@@ -1,21 +1,24 @@
 
 import type { KeyTextField, SelectField } from '@prismicio/client'
+import Link from 'next/link'
 
 interface ResourceRowProps {
   name: KeyTextField
   uploadDate: Date
   type: SelectField<"Video" | "PGN" | "Article">
   tags: string[]
+  slug: string
 }
 export function ResourceRow({
   name,
   uploadDate,
   type,
   tags,
+  slug
 }: ResourceRowProps): JSX.Element {
   return (
     <tr>
-      <td>{name}</td>
+      <td><Link href={`/resources/${slug}`} className='link'>{name}</Link></td>
       <td>{type}</td>
       <td>{uploadDate.toLocaleDateString('en-GB')}</td>
       <td>

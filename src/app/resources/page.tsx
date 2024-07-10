@@ -34,7 +34,14 @@ export default async function Resources(): Promise<JSX.Element> {
     )
 
     const client = createClient();
-    const resources = await client.getAllByType("resource")
+    const resources = await client.getAllByType("resource",{graphQuery:`
+      {
+        resource {
+          title
+          type
+        }
+      }
+      `}) // we're using a query here to ensure we don't pull down all the media data for every resource.
 
     const allTags:string[] = []
     resources.forEach(r=>{r.tags.forEach(t=>{allTags.push(t)})})
