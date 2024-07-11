@@ -1,0 +1,70 @@
+{
+  "id": "resource",
+  "label": "Resource",
+  "repeatable": true,
+  "status": true,
+  "format": "custom",
+  "json": {
+    "Main": {
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "title"
+        }
+      },
+      "type": {
+        "type": "Select",
+        "config": {
+          "label": "type",
+          "placeholder": "",
+          "options": ["Video", "PGN", "Article"]
+        }
+      },
+      "videos": {
+        "type": "Group",
+        "config": {
+          "label": "videos",
+          "repeat": true,
+          "fields": {
+            "embed": {
+              "type": "Embed",
+              "config": {
+                "label": "embed",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+          "label": "description"
+        }
+      },
+      "pgns": {
+        "type": "Group",
+        "config": {
+          "label": "pgns",
+          "repeat": true,
+          "fields": {
+            "pgn_file_name": {
+              "type": "Text",
+              "config": {
+                "label": "PGN File Name",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "uid"
+        }
+      }
+    }
+  }
+}
