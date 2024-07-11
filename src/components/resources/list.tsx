@@ -68,31 +68,38 @@ export function ResourceList({
         </thead>
         <tbody>
           {resources
-          .filter((r)=>{
-            if(selectedTags.length > 0) {
-              for(const tag of r.tags) {
-                if(selectedTags.includes(tag)) return true
+            .filter((r) => {
+              if (selectedTags.length > 0) {
+                for (const tag of r.tags) {
+                  if (selectedTags.includes(tag)) return true
+                }
               }
-            }
-            if(selectedTypes.length > 0) {
-              return selectedTypes.includes(r.data.type as string)
-            }
-            if(nameSearch.length > 0) {
-              return r.data.title?.toString().toLowerCase().includes(nameSearch.toLowerCase())
-            }
+              if (selectedTypes.length > 0) {
+                return selectedTypes.includes(r.data.type as string)
+              }
+              if (nameSearch.length > 0) {
+                return r.data.title
+                  ?.toString()
+                  .toLowerCase()
+                  .includes(nameSearch.toLowerCase())
+              }
 
-            return selectedTypes.length === 0 && selectedTags.length === 0 && nameSearch.length === 0
-          })
-          .map((resource) => (
-            <ResourceRow
-              key={resource.uid}
-              name={resource.data.title}
-              uploadDate={new Date(resource.first_publication_date)}
-              type={resource.data.type}
-              tags={resource.tags}
-              slug={resource.uid}
-            />
-          ))}
+              return (
+                selectedTypes.length === 0 &&
+                selectedTags.length === 0 &&
+                nameSearch.length === 0
+              )
+            })
+            .map((resource) => (
+              <ResourceRow
+                key={resource.uid}
+                name={resource.data.title}
+                uploadDate={new Date(resource.first_publication_date)}
+                type={resource.data.type}
+                tags={resource.tags}
+                slug={resource.uid}
+              />
+            ))}
         </tbody>
       </table>
     </div>

@@ -379,28 +379,33 @@ export type HomePageSectionsDocument<Lang extends string = string> =
   >
 
 /**
- * Item in *Resource → media*
+ * Item in *Resource → videos*
  */
-export interface ResourceDocumentDataMediaItem {
+export interface ResourceDocumentDataVideosItem {
   /**
-   * media field in *Resource → media*
+   * embed field in *Resource → videos*
    *
-   * - **Field Type**: Link to Media
+   * - **Field Type**: Embed
    * - **Placeholder**: *None*
-   * - **API ID Path**: resource.media[].media
-   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   * - **API ID Path**: resource.videos[].embed
+   * - **Documentation**: https://prismic.io/docs/field#embed
    */
-  media: prismic.LinkToMediaField
+  embed: prismic.EmbedField
+}
 
+/**
+ * Item in *Resource → pgns*
+ */
+export interface ResourceDocumentDataPgnsItem {
   /**
-   * name field in *Resource → media*
+   * PGN File Name field in *Resource → pgns*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: resource.media[].name
+   * - **API ID Path**: resource.pgns[].pgn_file_name
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
-  name: prismic.KeyTextField
+  pgn_file_name: prismic.KeyTextField
 }
 
 /**
@@ -430,15 +435,15 @@ interface ResourceDocumentData {
   type: prismic.SelectField<'Video' | 'PGN' | 'Article'>
 
   /**
-   * media field in *Resource*
+   * videos field in *Resource*
    *
    * - **Field Type**: Group
    * - **Placeholder**: *None*
-   * - **API ID Path**: resource.media[]
+   * - **API ID Path**: resource.videos[]
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#group
    */
-  media: prismic.GroupField<Simplify<ResourceDocumentDataMediaItem>>
+  videos: prismic.GroupField<Simplify<ResourceDocumentDataVideosItem>>
 
   /**
    * description field in *Resource*
@@ -450,6 +455,17 @@ interface ResourceDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   description: prismic.RichTextField
+
+  /**
+   * pgns field in *Resource*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: resource.pgns[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  pgns: prismic.GroupField<Simplify<ResourceDocumentDataPgnsItem>>
 }
 
 /**
@@ -505,7 +521,8 @@ declare module '@prismicio/client' {
       HomePageSectionsDocumentData,
       ResourceDocument,
       ResourceDocumentData,
-      ResourceDocumentDataMediaItem,
+      ResourceDocumentDataVideosItem,
+      ResourceDocumentDataPgnsItem,
       AllDocumentTypes,
     }
   }

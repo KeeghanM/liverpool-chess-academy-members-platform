@@ -17,13 +17,14 @@ export default async function Resources(): Promise<JSX.Element> {
   const canView = await db
     .select({
       activePayment: memberData.active_payment,
-      paymentOverride: memberData.payment_override
+      paymentOverride: memberData.payment_override,
     })
     .from(memberData)
     .where(eq(memberData.userId, session.user.id))
     .then((data) => {
-      return data[0]?.activePayment === true || data[0]?.paymentOverride === true
-      
+      return (
+        data[0]?.activePayment === true || data[0]?.paymentOverride === true
+      )
     })
 
   if (!canView)
@@ -33,25 +34,32 @@ export default async function Resources(): Promise<JSX.Element> {
       </h1>
     )
 
-    const client = createClient();
-    const resources = await client.getAllByType("resource",{graphQuery:`
+  const client = createClient()
+  const resources = await client.getAllByType('resource', {
+    graphQuery: `
       {
         resource {
           title
           type
         }
       }
-      `}) // we're using a query here to ensure we don't pull down all the media data for every resource.
+      `,
+  }) // we're using a query here to ensure we don't pull down all the media data for every resource.
 
-    const allTags:string[] = []
-    resources.forEach(r=>{r.tags.forEach(t=>{allTags.push(t)})})
-    const tags = [...new Set(allTags)]
+  const allTags: string[] = []
+  resources.forEach((r) => {
+    r.tags.forEach((t) => {
+      allTags.push(t)
+    })
+  })
+  const tags = [...new Set(allTags)]
 
-  return (<>
-    <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
-      Resources
-    </h1>
-    <ResourceList tags={tags} resources={resources} />
+  return (
+    <>
+      <h1 className='text-2xl md:text-4xl lg:text-6xl font-bold text-center flex items-center gap-4'>
+        Resources
+      </h1>
+      <ResourceList tags={tags} resources={resources} />
     </>
   )
 }

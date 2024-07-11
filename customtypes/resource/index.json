@@ -20,24 +20,16 @@
           "options": ["Video", "PGN", "Article"]
         }
       },
-      "media": {
+      "videos": {
         "type": "Group",
         "config": {
-          "label": "media",
+          "label": "videos",
           "repeat": true,
           "fields": {
-            "media": {
-              "type": "Link",
+            "embed": {
+              "type": "Embed",
               "config": {
-                "label": "media",
-                "placeholder": "",
-                "select": "media"
-              }
-            },
-            "name": {
-              "type": "Text",
-              "config": {
-                "label": "name",
+                "label": "embed",
                 "placeholder": ""
               }
             }
@@ -49,6 +41,22 @@
         "config": {
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
           "label": "description"
+        }
+      },
+      "pgns": {
+        "type": "Group",
+        "config": {
+          "label": "pgns",
+          "repeat": true,
+          "fields": {
+            "pgn_file_name": {
+              "type": "Text",
+              "config": {
+                "label": "PGN File Name",
+                "placeholder": ""
+              }
+            }
+          }
         }
       },
       "uid": {
