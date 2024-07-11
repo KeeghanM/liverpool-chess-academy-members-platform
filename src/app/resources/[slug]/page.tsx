@@ -25,7 +25,7 @@ export default async function ResourcePage({
         // eslint-disable-next-line -- Dunno why the prismic types arent working
         resource.data.videos.map((video) => (
           <iframe
-            key={video.embed.video_id}
+            key={video.embed.video_id as string}
             src={video.embed.embed_url}
             width='100%'
             height='300px'
