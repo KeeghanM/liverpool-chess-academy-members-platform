@@ -12,6 +12,7 @@ export function SignIn(): JSX.Element {
 
   useEffect(() => {
     setPending(false)
+    console.log(state)
   }, [state])
 
   return state.message ? (

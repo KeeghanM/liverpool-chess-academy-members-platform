@@ -44,6 +44,7 @@ export async function signInAction(
       message: 'A sign in link has been sent to your email.',
     }
   } catch (e) {
+    console.error('Sign in action error:', e)
     return {
       success: false,
       message: e instanceof Error ? e.message : 'An error occurred',

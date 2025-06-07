@@ -44,7 +44,7 @@ export default async function Resources(): Promise<JSX.Element> {
         }
       }
       `,
-  }) // we're using a query here to ensure we don't pull down all the media data for every resource.
+  })
 
   const allTags: string[] = []
   resources.forEach((r) => {
